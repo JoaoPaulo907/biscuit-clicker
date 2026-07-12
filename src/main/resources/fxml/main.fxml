@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.* ?>
+<?import javafx.scene.layout.*  ?>
+
+<HBox fx:id="mainBox"
+      spacing="200"
+      alignment="CENTER"
+      xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.biscuitclicker.Controller">
+
+    <VBox fx:id="leftBox" spacing="20" alignment="TOP_CENTER">
+        <VBox fx:id="status" alignment="CENTER">
+            <Label fx:id="points" alignment="CENTER" />
+            <Label fx:id="gain"   alignment="CENTER" />
+        </VBox>
+
+        <Button fx:id="mainButton" onAction="#handleMainButtonClick" />
+    </VBox>
+
+    <VBox fx:id="rightBox" spacing="20" alignment="TOP_CENTER">
+        <VBox fx:id="upgradesBox" alignment="CENTER">
+            <Button fx:id="powerUpgrade" alignment="CENTER"></Button>
+        </VBox>
+
+        <VBox fx:id="buildingsBox" alignment="CENTER"></VBox>
+    </VBox>
+</HBox>

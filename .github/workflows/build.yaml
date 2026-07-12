@@ -1,0 +1,109 @@
+name: Build Portable Packages
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+env:
+  APP_NAME: BiscuitClicker
+  MODULE_NAME: com.biscuitclicker
+  MAIN_CLASS: com.biscuitclicker.Main
+  JAVA_VERSION: "21"
+
+jobs:
+  build:
+    permissions:
+      contents: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            sep: ";"
+            artifact: BiscuitClicker-Windows.zip
+
+          - os: ubuntu-latest
+            sep: ":"
+            artifact: BiscuitClicker-Linux.tar.gz
+
+          - os: macos-latest
+            sep: ":"
+            artifact: BiscuitClicker-macOS.zip
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+
+      - name: Build project
+        run: mvn -B clean package
+
+      - name: Copy runtime dependencies
+        run: mvn -B dependency:copy-dependencies -DincludeScope=runtime -DoutputDirectory=target/libs
+
+      - name: Determine JAR name
+        id: jar
+        shell: bash
+        run: |
+          FINAL_NAME=$(mvn help:evaluate \
+            -Dexpression=project.build.finalName \
+            -q \
+            -DforceStdout)
+
+          echo "jar=target/${FINAL_NAME}.jar" >> "$GITHUB_OUTPUT"
+
+      - name: Create portable application
+        shell: bash
+        run: |
+          jpackage \
+            --type app-image \
+            --name "${{ env.APP_NAME }}" \
+            --dest dist \
+            --module-path "target/libs${{ matrix.sep }}${{ steps.jar.outputs.jar }}" \
+            --module "${{ env.MODULE_NAME }}/${{ env.MAIN_CLASS }}"
+
+      - name: Compress (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Compress-Archive `
+            -Path dist/${{ env.APP_NAME }} `
+            -DestinationPath ${{ matrix.artifact }}
+
+      - name: Compress (Linux)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          tar -czf "${{ matrix.artifact }}" -C dist "${{ env.APP_NAME }}"
+
+      - name: Compress (macOS)
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          ditto -c -k --sequesterRsrc --keepParent \
+            "dist/${{ env.APP_NAME }}.app" \
+            "${{ matrix.artifact }}"
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.artifact }}
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ matrix.artifact }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

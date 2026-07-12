@@ -1,0 +1,41 @@
+Button {
+    -fx-cursor: hand;
+}
+
+#mainBox {
+    -fx-padding: 75 50 75 50;
+}
+
+#mainButton {
+    -fx-background-color: #3498db;
+
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+
+    -fx-padding: 0;
+}
+
+#mainButton:hover {
+    -fx-background-color: #57a8df;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#mainButton:pressed {
+    -fx-background-color: #57a8df;
+    -fx-scale-x: 0.95;
+    -fx-scale-y: 0.95;
+}
+
+#points {
+    -fx-font-size: 45px;
+    -fx-font-weight: bold;
+}
+
+#gain {
+    -fx-font-size: 20px;
+}
+
+.upgradeButton, .buildingButton {
+    -fx-alignment: center-left;
+}
