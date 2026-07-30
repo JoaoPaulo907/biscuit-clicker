@@ -4,10 +4,12 @@ import com.biscuitclicker.exception.*;
 
 /**
  * Represents all the units of buildings of the same type.
+ * 
  * @since 1.0.0
+ * @version 1.0.1
  */
-public class Building {
-    private static final int MAX_QUANTITY = 999;
+public class Building implements Purchasable, Upgradable {
+    private static final int MAX_QUANTITY = 1000;
     private static final int MAX_LEVEL = 10;
 
     private final String name;
@@ -23,18 +25,8 @@ public class Building {
     private final int initialPrice;
     private final int initialUpgradePrice;
 
-    /* --- Constructors --- */
+    /* --- Constructor --- */
 
-    /**
-     * Creates a new Building initialized with {@code quantity = 0} and {@code level = 1}.
-     * 
-     * @param name The name of the building.
-     * @param gain The amount of points gained per building.
-     * @param price The price of each building.
-     * @param upgradePrice The price of one upgrade.
-     * 
-     * @since 1.0.0
-     */
     public Building(String name, double gain, int price, int upgradePrice) {
         if(name == null || name.isBlank() || gain <= 0 || price <= 0 || upgradePrice <= 0)
             throw new IllegalArgumentException("Invalid building values while initializing.");
@@ -47,38 +39,6 @@ public class Building {
 
         this.quantity = 0;
         this.level = 1;
-    }
-
-    /**
-     * Creates a new Building.
-     * 
-     * @param name The name of the building.
-     * @param quantity The amount units of this building type.
-     * @param level The level of this building.
-     * @param gain The amount of points gained per building.
-     * @param price The price of one building.
-     * @param upgradePrice The price of one upgrade.
-     * 
-     * @since 1.0.0
-     */
-    public Building(String name, int quantity, int level, double gain, int price, int upgradePrice) {
-        if(name == null || name.isBlank() || gain <= 0 || price <= 0 || upgradePrice <= 0)
-            throw new IllegalArgumentException("Invalid building values while initializing.");
-
-        if(quantity < 0 || quantity > MAX_QUANTITY)
-            throw new IllegalArgumentException("Invalid building quantity while initializing.");
-
-        if(level < 1 || level > MAX_LEVEL)
-            throw new IllegalArgumentException("Invalid building level while initializing.");
-
-        this.name = name;
-
-        this.initialGain = this.gain = gain;
-        this.initialPrice = this.price = price;
-        this.initialUpgradePrice = this.upgradePrice = upgradePrice;
-
-        this.quantity = quantity;
-        this.level = level;
     }
 
     /* --- Out --- */
@@ -103,10 +63,12 @@ public class Building {
         return this.gain * this.quantity;
     }
 
+    @Override
     public int getPrice() {
         return this.price;
     }
 
+    @Override
     public int getUpgradePrice() {
         return this.upgradePrice;
     }
@@ -131,42 +93,35 @@ public class Building {
     }
 
     /**
-     * Increments the quantity of units of this building by one.
+     * Tries to increment the quantity of units of this building by {@code quantity}.
      * @since 1.0.0
      */
-    public void increment() {
+    @Override
+    public void increment(int quantity) {
         if(this.quantity < 0 || this.quantity > MAX_QUANTITY)
             throw new IllegalStateException("Invalid building count.");
+
+        if(quantity < 1)
+            throw new IllegalArgumentException("Must add at least one building.");
 
         if(this.quantity == MAX_QUANTITY)
             throw new MaxQuantityException("Max quantity of buildings reached.");
 
-        this.quantity++;
+        this.quantity += quantity;
         this.calculateAttributes();
     }
 
     /**
-     * Decrements the quantity of units of this building by one.
+     * Tries to upgrade the building by one level.
      * @since 1.0.0
      */
-    public void decrement() {
-        if(this.quantity < 0 || this.quantity > MAX_QUANTITY)
-            throw new IllegalStateException("Invalid building count.");
-
-        if(this.quantity == 0)
-            throw new MaxQuantityException("Cannot decrement from 0 buildings.");
-
-        this.quantity--;
-        this.calculateAttributes();
-    }
-
-    /**
-     * Upgrades the building by one level (if possible).
-     * @since 1.0.0
-     */
+    @Override
     public void upgrade() {
         if(this.level < 1 || this.level > MAX_LEVEL)
             throw new IllegalStateException("Invalid building level.");
+
+        if(this.quantity < 1)
+            throw new InsufficientQuantityException("You must have at least 1 building to upgrade it.");
 
         if(this.level == MAX_LEVEL)
             throw new MaxLevelException("Max building level reached.");

@@ -11,19 +11,16 @@
       fx:controller="com.biscuitclicker.Controller">
 
     <VBox fx:id="leftBox" spacing="20" alignment="TOP_CENTER">
-        <VBox fx:id="status" alignment="CENTER">
-            <Label fx:id="points" alignment="CENTER" />
-            <Label fx:id="gain"   alignment="CENTER" />
+        <VBox fx:id="statusBox" alignment="CENTER">
+            <Label fx:id="pointsLabel" alignment="CENTER" />
+            <Label fx:id="gainLabel"   alignment="CENTER" />
         </VBox>
 
-        <Button fx:id="mainButton" onAction="#handleMainButtonClick" />
+        <Button fx:id="mainButton" />
     </VBox>
 
     <VBox fx:id="rightBox" spacing="20" alignment="TOP_CENTER">
-        <VBox fx:id="upgradesBox" alignment="CENTER">
-            <Button fx:id="powerUpgrade" alignment="CENTER"></Button>
-        </VBox>
-
+        <VBox fx:id="upgradesBox"  alignment="CENTER"></VBox>
         <VBox fx:id="buildingsBox" alignment="CENTER"></VBox>
     </VBox>
 </HBox>

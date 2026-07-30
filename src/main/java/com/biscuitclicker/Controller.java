@@ -1,23 +1,29 @@
 package com.biscuitclicker;
 
-import com.biscuitclicker.exception.*;
+import com.biscuitclicker.exception.BiscuitClickerException;
+import com.biscuitclicker.util.Log;
 import com.biscuitclicker.model.*;
+import com.biscuitclicker.view.*;
 
 import java.text.NumberFormat;
 import java.util.Locale;
 
 import javafx.fxml.FXML;
+import javafx.scene.layout.VBox;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
 
 /**
  * Controls the user interface of the application.
+ * 
  * @since 1.0.0
+ * @version 1.0.1
  */
 public class Controller {
-    private final Game game = Main.getGame();
+    private final Game game = new Game();
 
     private final NumberFormat nf = NumberFormat.getNumberInstance(
         Locale.of("en", "US")
@@ -29,13 +35,13 @@ public class Controller {
     private VBox leftBox;
 
     @FXML
-    private VBox status;
+    private VBox statusBox;
 
     @FXML
-    private Label points;
+    private Label pointsLabel;
 
     @FXML
-    private Label gain;
+    private Label gainLabel;
 
     @FXML
     private Button mainButton;
@@ -51,138 +57,118 @@ public class Controller {
     @FXML
     private VBox buildingsBox;
 
-    @FXML
-    private Button powerUpgrade;
-
     /* --- Functions --- */
 
     @FXML
     public void initialize() {
-        // Sets the width of the outer elements and the main button
+        // Sets the width of the outer elements
 
-        leftBox.setPrefWidth(750);
-        rightBox.setPrefWidth(750);
+        this.leftBox.setPrefWidth(750);
+        this.rightBox.setPrefWidth(750);
 
-        mainButton.setPrefSize(150, 150);
+        // Sets the size and radius of the main button
 
-        mainButton.setStyle(
-            "-fx-border-radius: 75;" +
-            "-fx-background-radius: 75;"
+        this.mainButton.setPrefSize(150, 150);
+
+        this.mainButton.setStyle(
+            "-fx-border-radius: 50%;" +
+            "-fx-background-radius: 50%;"
         );
+
+        // Loads the biscuit image
+
+        ImageView img = new ImageView(
+            new Image(getClass().getResource("/images/biscuit.png").toExternalForm())
+        );
+
+        img.setFitWidth(150);
+        img.setFitHeight(150);
+
+        Circle circle = new Circle(75, 75, 75);
+        img.setClip(circle);
+
+        this.mainButton.setGraphic(img);
+
+        // Handles clicks in the main button
+
+        this.mainButton.setOnAction(event -> {
+            this.game.click();
+            this.updateStatus();
+        });
 
         // Sets the width of the inner elements
 
-        status.setMaxWidth(Double.MAX_VALUE);
-        points.setMaxWidth(Double.MAX_VALUE);
-        gain.setMaxWidth(Double.MAX_VALUE);
+        this.statusBox.setMaxWidth(Double.MAX_VALUE);
 
-        upgradesBox.setMaxWidth(Double.MAX_VALUE);
-        buildingsBox.setMaxWidth(Double.MAX_VALUE);
-        powerUpgrade.setMaxWidth(Double.MAX_VALUE);
+        this.pointsLabel.setMaxWidth(Double.MAX_VALUE);
+        this.gainLabel.setMaxWidth(Double.MAX_VALUE);
+
+        this.upgradesBox.setMaxWidth(Double.MAX_VALUE);
+        this.buildingsBox.setMaxWidth(Double.MAX_VALUE);
 
         // Creates the buttons for each building
 
-        for(int i = 0; i < game.getBuildings().size(); i++) {
-            Building current = this.game.getBuildings().get(i);
+        for(Building current : game.getBuildings()) {
+            BuildingNode buildingNode = new BuildingNode(current, nf);
 
-            // Creates the elements
-
-            HBox currentBuildingBox = new HBox();
-            currentBuildingBox.setMaxWidth(Double.MAX_VALUE);
-
-            Button buildingBtn = new Button(
-                current.getName() + " " +
-                "("   + nf.format(current.getQuantity()) + ")"  + 
-                " - " + nf.format(current.getPrice())    + " b$"
-            );
-
-            buildingBtn.getStyleClass().add("buildingButton");
-
-            Button upgradeBtn = new Button(
-                "lv. " + current.getLevel() +
-                " - "  + nf.format(current.getUpgradePrice()) + " b$"
-            );
-
-            upgradeBtn.getStyleClass().add("upgradeButton");
-
-            // Assigns the click events
-
-            final int idx = i;
-
-            buildingBtn.setOnAction(event -> {
+            buildingNode.getPurchaseButton().setOnAction(event -> {
                 try {
-                    this.game.buy(idx, 1);
+                    this.game.buy(buildingNode.getModel(), 1);
                 } catch(BiscuitClickerException e) {
-                    System.out.println("Error: " + e.getMessage());
+                    Log.error(e.getMessage());
                 }
 
-                buildingBtn.setText(
-                    current.getName() + " " +
-                    "("   + nf.format(current.getQuantity()) + ")"  + 
-                    " - " + nf.format(current.getPrice())    + " b$"
+                buildingNode.getPurchaseButton().setText(
+                    buildingNode.getPurchaseText(nf)
                 );
 
-                updateStatus();
+                this.updateStatus();
             });
 
-            upgradeBtn.setOnAction(event -> {
+            buildingNode.getUpgradeButton().setOnAction(event -> {
                 try {
-                    this.game.upgradeBuilding(idx);
+                    this.game.upgrade(buildingNode.getModel());
                 } catch(BiscuitClickerException e) {
-                    System.out.println("Error: " + e.getMessage());
+                    Log.error(e.getMessage());
                 }
 
-                upgradeBtn.setText(
-                    "lv. " + current.getLevel() +
-                    " - "  + nf.format(current.getUpgradePrice()) + " b$"
+                buildingNode.getUpgradeButton().setText(
+                    buildingNode.getUpgradeText(nf)
                 );
 
-                updateStatus();
+                this.updateStatus();
             });
 
-            // Puts the elements into the UI
-
-            buildingBtn.prefWidthProperty().bind(
-                currentBuildingBox.widthProperty().multiply(0.60)
-            );
-
-            upgradeBtn.prefWidthProperty().bind(
-                currentBuildingBox.widthProperty().multiply(0.40)
-            );
-
-            currentBuildingBox.getChildren().addAll(buildingBtn, upgradeBtn);
-            buildingsBox.getChildren().add(currentBuildingBox);
+            buildingsBox.getChildren().add(buildingNode.getRootNode());
         }
 
-        powerUpgrade.setText(
-            "Upgrade Click - " + nf.format(this.game.getPower().getUpgradePrice()) + " b$"
-        );
+        // Creates the power upgrade button
 
-        powerUpgrade.setOnAction(event -> {
+        PowerNode powerNode = new PowerNode(this.game.getPower(), nf);
+
+        powerNode.getUpgradeButton().setOnAction(event -> {
             try {
-                this.game.upgradePower();
+                this.game.upgrade(powerNode.getModel());
             } catch(BiscuitClickerException e) {
-                System.out.println("Error: " + e.getMessage());
+                Log.error(e.getMessage());
             }
 
-            powerUpgrade.setText(
-                "Upgrade Click - " + nf.format(this.game.getPower().getUpgradePrice()) + " b$"
+            powerNode.getUpgradeButton().setText(
+                powerNode.getUpgradeText(nf)
             );
 
-            updateStatus();
+            this.updateStatus();
         });
 
-        updateStatus();
-    }
+        this.upgradesBox.getChildren().add(powerNode.getRootNode());
 
-    @FXML
-    private void handleMainButtonClick() {
-        this.game.click();
-        updateStatus();
+        // Shows the initial status
+
+        this.updateStatus();
     }
 
     /**
-     * Updates the game UI based on the Game object state.
+     * Updates the game UI based on current Game instance state.
      * @since 1.0.0
      */
     public void updateStatus() {
@@ -195,11 +181,15 @@ public class Controller {
         nf.setMaximumFractionDigits(0);
         String formattedPPC = nf.format(this.game.getPower().getGain());
 
-        points.setText(formattedPoints + " biscuits");
+        this.pointsLabel.setText(formattedPoints + " biscuits");
 
-        gain.setText(
+        this.gainLabel.setText(
             "bps: " + formattedPPS + "\n" +
             "bpc: " + formattedPPC
         );
+    }
+
+    public Game getGame() {
+        return this.game;
     }
 }

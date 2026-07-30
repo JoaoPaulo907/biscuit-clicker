@@ -7,10 +7,12 @@ import java.util.Arrays;
 
 /**
  * Controls the game status and main logic.
+ * 
  * @since 1.0.0
+ * @version 1.0.1
  */
 public class Game {
-    private static final Building[] standardBuildings = {
+    private static final Building[] STANDARD_BUILDINGS = {
         new Building("Cursor",  0.1,       15,      100     ),
         new Building("Grandma", 1.0,       100,     1000    ),
         new Building("Farm",    8.0,       1100,    11000   ),
@@ -25,33 +27,14 @@ public class Game {
     private Power power;
     private List<Building> buildings;
 
-    /* --- Constructors --- */
+    /* --- Constructor --- */
 
-    /**
-     * Creates a new Game.
-     * @since 1.0.0
-     */
     public Game() {
         this.points = 0.0;
         this.pointsPerSecond = 0.0;
 
         this.power = new Power();
-        this.buildings = Arrays.asList(standardBuildings);
-    }
-
-    /**
-     * Creates a new Game initialized with the given values.
-     * 
-     * @param points The initial value of points.
-     * @param powerLevel The initial level of the power of the clicks.
-     * @param buildings A List with the already owned buildings.
-     * 
-     * @since 1.0.0
-     */
-    public Game(double points, int powerLevel, List<Building> buildings) {
-        this.points = points;
-        this.power = new Power(powerLevel);
-        this.buildings = buildings;
+        this.buildings = Arrays.asList(STANDARD_BUILDINGS);
     }
 
     /* --- Out --- */
@@ -78,7 +61,7 @@ public class Game {
      * Calculates current pps.
      * @since 1.0.0
      */
-    private void calcPointsPerSecond() {
+    private void calculatePointsPerSecond() {
         this.pointsPerSecond = 0.0;
 
         for(Building current : this.buildings)
@@ -98,64 +81,57 @@ public class Game {
     }
 
     /**
-     * Buys {@code quantity} units of one building type.
+     * Tries to buy something.
      * 
-     * @param index The index of the building to be bougth.
-     * @param quantity The quantity of instances to be bougth - this impacts on the price of the action.
+     * @param purchasable Something that can be purchased.
+     * @param quantity The amount of units to be purchased.
      * 
-     * @since 1.0.0
+     * @since 1.0.1
      */
-    public void buy(int index, int quantity) {
-        if(index < 0 || index >= this.buildings.size())
-            throw new IndexOutOfBoundsException();
+    public void buy(Purchasable purchasable, int quantity) {
+        if(purchasable == null)
+            throw new NullPointerException();
 
-        Building building = this.buildings.get(index);
+        int totalPrice = 0;
 
         for(int i = 0; i < quantity; i++) {
-            int price = building.getPrice();
-
-            if(this.hasPointsToBuy(price)) {
-                building.increment();
-                this.points -= price;
-                this.calcPointsPerSecond();
-            } else {
-                for(int j = 0; j < i; j++) {
-                    building.decrement();
-                    this.points += building.getPrice();
-                }
-
-                this.calcPointsPerSecond();
-
-                throw new InsufficientPointsException(
-                    "You don't have enough biscuits (" + this.points + " / " + price + ")"
-                );
-            }
+            int curr = purchasable.getPrice();
+            totalPrice += curr;
         }
+
+        if(!this.hasPointsToBuy(totalPrice)) {
+            throw new InsufficientPointsException(
+                "You don't have enough biscuits (" + this.points + " / " + totalPrice + ")"
+            );
+        }
+
+        purchasable.increment(quantity);
+        this.points -= totalPrice;
+
+        this.calculatePointsPerSecond();
     }
 
     /**
-     * Upgrades one building by 1 level.
-     * @param index The index of the building to be upgraded.
+     * Tries to upgrade something.
      * 
-     * @since 1.0.0
+     * @param upgradable Something that can be upgraded.
+     * 
+     * @since 1.0.1
      */
-    public void upgradeBuilding(int index) {
-        if(index < 0 || index >= this.buildings.size())
-            throw new IndexOutOfBoundsException();
+    public void upgrade(Upgradable upgradable) {
+        if(upgradable == null)
+            throw new NullPointerException();
 
-        Building building = this.buildings.get(index);
-        int price = building.getUpgradePrice();
+        int totalPrice = upgradable.getUpgradePrice();
 
-        if(this.hasPointsToBuy(price)) {
-            building.upgrade();
-
-            this.points -= price;
-            this.calcPointsPerSecond();
-        } else {
+        if(!this.hasPointsToBuy(totalPrice)) {
             throw new InsufficientPointsException(
-                "You don't have enough biscuits (" + this.points + " / " + price + ")"
+                "You don't have enough biscuits (" + this.points + " / " + totalPrice + ")"
             );
         }
+
+        upgradable.upgrade();
+        this.points -= totalPrice;
     }
 
     /**
@@ -167,24 +143,7 @@ public class Game {
     }
 
     /**
-     * Upgrades the power of the clicks by one level.
-     * @since 1.0.0
-     */
-    public void upgradePower() {
-        int price = this.power.getUpgradePrice();
-
-        if(this.hasPointsToBuy(price)) {
-            this.power.upgrade();
-            this.points -= price;
-        } else {
-            throw new InsufficientPointsException(
-                "You don't have enough biscuits (" + this.points + " / " + price + ")"
-            );
-        }
-    }
-
-    /**
-     * Increments the Game's total points by it's pps.
+     * Increments the Game's total points by its pps.
      * @since 1.0.0
      */
     public void gainAutoPoints() {

@@ -4,9 +4,11 @@ import com.biscuitclicker.exception.*;
 
 /**
  * Represents the power of one click on the main button.
+ * 
  * @since 1.0.0
+ * @version 1.0.1
  */
-public class Power {
+public class Power implements Upgradable {
     private static final int MAX_LEVEL = 10;
 
     private int level;
@@ -17,28 +19,10 @@ public class Power {
     private final int initialGain = 1;
     private final int initialUpgradePrice = 100;
 
-    /* --- Constructors --- */
+    /* --- Constructor --- */
 
-    /**
-     * Creates a new Power initialized in level 1.
-     * @since 1.0.0
-     */
     public Power() {
         this.level = 1;
-        this.calculateAttributes();
-    }
-
-    /**
-     * Creates a new Power.
-     * @param level The starting level
-     * 
-     * @since 1.0.0
-     */
-    public Power(int level) {
-        if(level < 1 || level > MAX_LEVEL)
-            throw new IllegalArgumentException("Invalid power level while initializing.");
-
-        this.level = level;
         this.calculateAttributes();
     }
 
@@ -52,6 +36,7 @@ public class Power {
         return this.gain;
     }
 
+    @Override
     public int getUpgradePrice() {
         return this.upgradePrice;
     }
@@ -73,9 +58,10 @@ public class Power {
     }
 
     /**
-     * Upgrades the power by one level (if possible).
+     * Tries to upgrade the power by one level.
      * @since 1.0.0
      */
+    @Override
     public void upgrade() {
         if(this.level < 1 || this.level > MAX_LEVEL)
             throw new IllegalStateException("Invalid power level.");

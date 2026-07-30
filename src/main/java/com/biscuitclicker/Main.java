@@ -2,51 +2,64 @@ package com.biscuitclicker;
 
 import com.biscuitclicker.model.Game;
 
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
 
 /**
  * <h3>--- Biscuit Clicker ---</h3>
  * See detais about the application in the README.md file.
  * 
- * @version 1.0.0
+ * @since 1.0.0
+ * @version 1.0.1
  */
 public class Main extends Application {
-    private static final Game GAME = new Game();
+    private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
+    private Game game = null;
     private Controller controller = null;
-    private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     /* --- Program launch --- */
 
     public static void main(String[] args) {
-        launch();
+        Application.launch(args);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+        // Loads the FXML and creates the scene
+
         FXMLLoader fxmlLoader = new FXMLLoader(
-            getClass().getResource("/fxml/main.fxml")
+            getClass().getResource("/fxml/view.fxml")
         );
 
         double standardWidth = 1000.0;
         double standardHeight = 650.0;
 
         Scene scene = new Scene(fxmlLoader.load(), standardWidth, standardHeight);
+
+        // Gets the controller and game instances
+
         this.controller = fxmlLoader.getController();
+        this.game = this.controller.getGame();
+
+        // Loads the CSS in the scene
 
         scene.getStylesheets().add(
             getClass().getResource("/css/style.css").toExternalForm()
         );
 
+        // Sets the title and the scene in the stage
+
         stage.setTitle("Biscuit Clicker");
         stage.setScene(scene);
+
+        // Returns to the standard dimentions when demaximizated
 
         stage.maximizedProperty().addListener((obs, wasMaximized, isMaximized) -> {
             if(!isMaximized) {
@@ -56,19 +69,16 @@ public class Main extends Application {
             }
         });
 
+        // Shuts down the scheduler at the end
+
         stage.setOnCloseRequest(event -> {
             this.scheduler.shutdown();
         });
 
+        // Starts the application
+
         stage.show();
-
-        startAutoGain();
-    }
-
-    /* --- Out --- */
-
-    public static Game getGame() {
-        return GAME;
+        this.startAutoGain();
     }
 
     /* --- Autogain --- */
@@ -79,13 +89,11 @@ public class Main extends Application {
      */
     public void startAutoGain() {
         this.scheduler.scheduleAtFixedRate(() -> {
-            GAME.gainAutoPoints();
+            this.game.gainAutoPoints();
 
-            if(this.controller != null) {
-                javafx.application.Platform.runLater(() -> {
-                    this.controller.updateStatus();
-                });
-            }
+            javafx.application.Platform.runLater(() -> {
+                this.controller.updateStatus();
+            });
         }, 0, 1, TimeUnit.SECONDS);
     }
 }
