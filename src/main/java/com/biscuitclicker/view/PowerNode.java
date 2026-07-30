@@ -9,9 +9,7 @@ import javafx.scene.control.Button;
 
 /**
  * Links the model of the Power class to its interface.
- * 
  * @since 1.0.1
- * @version 1.0.1
  */
 public class PowerNode {
     private HBox rootNode;

@@ -12,11 +12,9 @@ import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 
 /**
- * <h3>--- Biscuit Clicker ---</h3>
- * See detais about the application in the README.md file.
+ * <h3>Biscuit Clicker</h3>
  * 
- * @since 1.0.0
- * @version 1.0.1
+ * See detais about the application in the README.md file.
  */
 public class Main extends Application {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);

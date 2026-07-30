@@ -9,9 +9,7 @@ import javafx.scene.control.Button;
 
 /**
  * Links the model of the Building class to its interface.
- * 
  * @since 1.0.1
- * @version 1.0.1
  */
 public class BuildingNode {
     private HBox rootNode;

@@ -2,9 +2,7 @@ package com.biscuitclicker.util;
 
 /**
  * Centralizes the log system into one class.
- * 
  * @since 1.0.1
- * @version 1.0.1
  */
 public abstract class Log {
     public static void log(Object msg) {

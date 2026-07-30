@@ -18,9 +18,7 @@ import javafx.scene.shape.Circle;
 
 /**
  * Controls the user interface of the application.
- * 
  * @since 1.0.0
- * @version 1.0.1
  */
 public class Controller {
     private final Game game = new Game();
@@ -56,6 +54,12 @@ public class Controller {
 
     @FXML
     private VBox buildingsBox;
+
+    /* --- Out --- */
+
+    public Game getGame() {
+        return this.game;
+    }
 
     /* --- Functions --- */
 
@@ -187,9 +191,5 @@ public class Controller {
             "bps: " + formattedPPS + "\n" +
             "bpc: " + formattedPPC
         );
-    }
-
-    public Game getGame() {
-        return this.game;
     }
 }

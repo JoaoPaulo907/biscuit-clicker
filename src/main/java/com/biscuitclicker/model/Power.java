@@ -4,9 +4,7 @@ import com.biscuitclicker.exception.*;
 
 /**
  * Represents the power of one click on the main button.
- * 
  * @since 1.0.0
- * @version 1.0.1
  */
 public class Power implements Upgradable {
     private static final int MAX_LEVEL = 10;

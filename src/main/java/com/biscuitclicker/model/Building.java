@@ -4,9 +4,7 @@ import com.biscuitclicker.exception.*;
 
 /**
  * Represents all the units of buildings of the same type.
- * 
  * @since 1.0.0
- * @version 1.0.1
  */
 public class Building implements Purchasable, Upgradable {
     private static final int MAX_QUANTITY = 1000;

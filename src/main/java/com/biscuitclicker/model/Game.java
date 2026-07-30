@@ -7,9 +7,7 @@ import java.util.Arrays;
 
 /**
  * Controls the game status and main logic.
- * 
  * @since 1.0.0
- * @version 1.0.1
  */
 public class Game {
     private static final Building[] STANDARD_BUILDINGS = {
@@ -132,6 +130,8 @@ public class Game {
 
         upgradable.upgrade();
         this.points -= totalPrice;
+
+        this.calculatePointsPerSecond();
     }
 
     /**

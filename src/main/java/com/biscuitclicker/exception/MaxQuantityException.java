@@ -2,9 +2,7 @@ package com.biscuitclicker.exception;
 
 /**
  * An Exception that extends {@code BiscuitClickerException}, representing that the caller has already reached the max quantity of units.
- * 
  * @since 1.0.0
- * @version 1.0.1
  */
 public class MaxQuantityException extends BiscuitClickerException {
     public MaxQuantityException() {

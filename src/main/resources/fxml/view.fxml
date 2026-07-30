@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*  ?>
 
 <HBox fx:id="mainBox"
-      spacing="200"
+      spacing="150"
       alignment="CENTER"
       xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
