@@ -1,7 +1,9 @@
 package com.biscuitclicker;
 
 import com.biscuitclicker.exception.BiscuitClickerException;
-import com.biscuitclicker.util.Log;
+import com.biscuitclicker.util.Logger;
+import com.biscuitclicker.util.EffectManager;
+
 import com.biscuitclicker.model.*;
 import com.biscuitclicker.view.*;
 
@@ -9,9 +11,13 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import javafx.fxml.FXML;
+
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
@@ -21,16 +27,26 @@ import javafx.scene.shape.Circle;
  * @since 1.0.0
  */
 public class Controller {
-    private final Game game = new Game();
+
+    /* --- Attributes --- */
+
+    private Game game = null;
+    private EffectManager effectManager = null;
 
     private final NumberFormat nf = NumberFormat.getNumberInstance(
         Locale.of("en", "US")
     );
 
-    /* --- FXML left box --- */
+    /* --- FXML elements --- */
+
+    @FXML
+    private Pane effectLayer;
 
     @FXML
     private VBox leftBox;
+
+    @FXML
+    private VBox rightBox;
 
     @FXML
     private VBox statusBox;
@@ -44,42 +60,29 @@ public class Controller {
     @FXML
     private Button mainButton;
 
-    /* --- FXML right box --- */
-
-    @FXML
-    private VBox rightBox;
-
     @FXML
     private VBox upgradesBox;
 
     @FXML
     private VBox buildingsBox;
 
-    /* --- Out --- */
-
-    public Game getGame() {
-        return this.game;
-    }
-
-    /* --- Functions --- */
+    /* --- Start --- */
 
     @FXML
     public void initialize() {
+        // Initializes the attributes
+
+        this.game = new Game();
+        this.effectManager = new EffectManager(this.effectLayer);
+
         // Sets the width of the outer elements
 
         this.leftBox.setPrefWidth(750);
         this.rightBox.setPrefWidth(750);
 
-        // Sets the size and radius of the main button
+        // Stylizes the biscuit button
 
         this.mainButton.setPrefSize(150, 150);
-
-        this.mainButton.setStyle(
-            "-fx-border-radius: 50%;" +
-            "-fx-background-radius: 50%;"
-        );
-
-        // Loads the biscuit image
 
         ImageView img = new ImageView(
             new Image(getClass().getResource("/images/biscuit.png").toExternalForm())
@@ -95,9 +98,15 @@ public class Controller {
 
         // Handles clicks in the main button
 
-        this.mainButton.setOnAction(event -> {
+        this.mainButton.setOnMouseClicked(event -> {
             this.game.click();
             this.updateStatus();
+
+            this.effectManager.risingText(
+                "+" + this.game.getPower().getGain(),
+                event.getSceneX(),
+                event.getSceneY()
+            );
         });
 
         // Sets the width of the inner elements
@@ -119,7 +128,7 @@ public class Controller {
                 try {
                     this.game.buy(buildingNode.getModel(), 1);
                 } catch(BiscuitClickerException e) {
-                    Log.error(e.getMessage());
+                    Logger.error(e.getMessage());
                 }
 
                 buildingNode.getPurchaseButton().setText(
@@ -133,7 +142,7 @@ public class Controller {
                 try {
                     this.game.upgrade(buildingNode.getModel());
                 } catch(BiscuitClickerException e) {
-                    Log.error(e.getMessage());
+                    Logger.error(e.getMessage());
                 }
 
                 buildingNode.getUpgradeButton().setText(
@@ -154,7 +163,7 @@ public class Controller {
             try {
                 this.game.upgrade(powerNode.getModel());
             } catch(BiscuitClickerException e) {
-                Log.error(e.getMessage());
+                Logger.error(e.getMessage());
             }
 
             powerNode.getUpgradeButton().setText(
@@ -170,6 +179,14 @@ public class Controller {
 
         this.updateStatus();
     }
+
+    /* --- Out --- */
+
+    public Game getGame() {
+        return this.game;
+    }
+
+    /* --- Methods --- */
 
     /**
      * Updates the game UI based on current Game instance state.

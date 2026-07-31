@@ -1,8 +1,8 @@
 package com.biscuitclicker.view;
 
-import java.text.NumberFormat;
-
 import com.biscuitclicker.model.Power;
+
+import java.text.NumberFormat;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
@@ -12,6 +12,9 @@ import javafx.scene.control.Button;
  * @since 1.0.1
  */
 public class PowerNode {
+
+    /* --- Attributes --- */
+
     private HBox rootNode;
     private Button upgradeButton;
 
@@ -59,7 +62,7 @@ public class PowerNode {
 
     public String getUpgradeText(NumberFormat nf) {
         return (
-            "Upgrade Click - " + nf.format(this.model.getUpgradePrice()) + " b$"
+            "Upgrade Clicks - " + nf.format(this.model.getUpgradePrice()) + " b$"
         );
     }
 }

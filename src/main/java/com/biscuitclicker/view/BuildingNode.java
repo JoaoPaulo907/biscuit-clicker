@@ -12,6 +12,9 @@ import javafx.scene.control.Button;
  * @since 1.0.1
  */
 public class BuildingNode {
+
+    /* --- Attributes --- */
+
     private HBox rootNode;
     private Button purchaseButton;
     private Button upgradeButton;

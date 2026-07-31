@@ -7,6 +7,9 @@ import com.biscuitclicker.exception.*;
  * @since 1.0.0
  */
 public class Building implements Purchasable, Upgradable {
+
+    /* --- Attributes --- */
+
     private static final int MAX_QUANTITY = 1000;
     private static final int MAX_LEVEL = 10;
 
@@ -71,7 +74,7 @@ public class Building implements Purchasable, Upgradable {
         return this.upgradePrice;
     }
 
-    /* --- Main logic --- */
+    /* --- Methods --- */
 
     /**
      * Sets {@code gain}, {@code price} and {@code upgradePrice} based on the level and count of the building.

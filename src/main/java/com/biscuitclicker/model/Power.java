@@ -7,6 +7,9 @@ import com.biscuitclicker.exception.*;
  * @since 1.0.0
  */
 public class Power implements Upgradable {
+
+    /* --- Attributes --- */
+
     private static final int MAX_LEVEL = 10;
 
     private int level;
@@ -39,7 +42,7 @@ public class Power implements Upgradable {
         return this.upgradePrice;
     }
 
-    /* --- Main logic --- */
+    /* --- Methods --- */
 
     /**
      * Sets {@code gain} and {@code upgradePrice} based on the level of the power.

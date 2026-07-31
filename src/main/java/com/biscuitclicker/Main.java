@@ -17,6 +17,9 @@ import javafx.fxml.FXMLLoader;
  * See detais about the application in the README.md file.
  */
 public class Main extends Application {
+
+    /* --- Attributes --- */
+
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
     private Game game = null;

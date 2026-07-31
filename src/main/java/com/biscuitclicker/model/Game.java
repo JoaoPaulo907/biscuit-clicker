@@ -10,6 +10,9 @@ import java.util.Arrays;
  * @since 1.0.0
  */
 public class Game {
+
+    /* --- Attributes --- */
+
     private static final Building[] STANDARD_BUILDINGS = {
         new Building("Cursor",  0.1,       15,      100     ),
         new Building("Grandma", 1.0,       100,     1000    ),
@@ -53,7 +56,7 @@ public class Game {
         return this.buildings;
     }
 
-    /* --- Main logic --- */
+    /* --- Methods --- */
 
     /**
      * Calculates current pps.
@@ -99,7 +102,7 @@ public class Game {
 
         if(!this.hasPointsToBuy(totalPrice)) {
             throw new InsufficientPointsException(
-                "You don't have enough biscuits (" + this.points + " / " + totalPrice + ")"
+                "You don't have enough biscuits (" + this.points + " / " + totalPrice + ")."
             );
         }
 
@@ -124,7 +127,7 @@ public class Game {
 
         if(!this.hasPointsToBuy(totalPrice)) {
             throw new InsufficientPointsException(
-                "You don't have enough biscuits (" + this.points + " / " + totalPrice + ")"
+                "You don't have enough biscuits (" + this.points + " / " + totalPrice + ")."
             );
         }
 

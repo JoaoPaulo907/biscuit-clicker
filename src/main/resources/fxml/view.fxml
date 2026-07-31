@@ -3,24 +3,26 @@
 <?import javafx.scene.control.* ?>
 <?import javafx.scene.layout.*  ?>
 
-<HBox fx:id="mainBox"
-      spacing="150"
-      alignment="CENTER"
-      xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.biscuitclicker.Controller">
+<StackPane fx:id="root"
+           xmlns="http://javafx.com/javafx/21"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.biscuitclicker.Controller">
 
-    <VBox fx:id="leftBox" spacing="20" alignment="TOP_CENTER">
-        <VBox fx:id="statusBox" alignment="CENTER">
-            <Label fx:id="pointsLabel" alignment="CENTER" />
-            <Label fx:id="gainLabel"   alignment="CENTER" />
+    <HBox fx:id="mainBox" spacing="150" alignment="CENTER">
+        <VBox fx:id="leftBox" spacing="20" alignment="TOP_CENTER">
+            <VBox fx:id="statusBox" alignment="CENTER">
+                <Label fx:id="pointsLabel" alignment="CENTER" />
+                <Label fx:id="gainLabel"   alignment="CENTER" />
+            </VBox>
+
+            <Button fx:id="mainButton" />
         </VBox>
 
-        <Button fx:id="mainButton" />
-    </VBox>
+        <VBox fx:id="rightBox" spacing="20" alignment="TOP_CENTER">
+            <VBox fx:id="upgradesBox"  alignment="CENTER" />
+            <VBox fx:id="buildingsBox" alignment="CENTER" />
+        </VBox>
+    </HBox>
 
-    <VBox fx:id="rightBox" spacing="20" alignment="TOP_CENTER">
-        <VBox fx:id="upgradesBox"  alignment="CENTER"></VBox>
-        <VBox fx:id="buildingsBox" alignment="CENTER"></VBox>
-    </VBox>
-</HBox>
+    <Pane fx:id="effectLayer" mouseTransparent="true" />
+</StackPane>
