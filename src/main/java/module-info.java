@@ -1,10 +1,10 @@
-module com.biscuitclicker {
+module com.joaopfsuarez.biscuitclicker {
     requires transitive javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
 
-    exports com.biscuitclicker;
-    exports com.biscuitclicker.model;
+    exports com.joaopfsuarez.biscuitclicker;
+    exports com.joaopfsuarez.biscuitclicker.model;
 
-    opens com.biscuitclicker to javafx.fxml;
+    opens com.joaopfsuarez.biscuitclicker to javafx.fxml;
 }

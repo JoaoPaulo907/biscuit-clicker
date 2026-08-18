@@ -1,14 +1,14 @@
-package com.biscuitclicker.view;
-
-import com.biscuitclicker.model.Building;
+package com.joaopfsuarez.biscuitclicker.view;
 
 import java.text.NumberFormat;
+
+import com.joaopfsuarez.biscuitclicker.model.Building;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
 
 /**
- * Links the model of the Building class to its interface.
+ * Represents a building node, linking the view to the model.
  * @since 1.0.1
  */
 public class BuildingNode {
@@ -40,7 +40,7 @@ public class BuildingNode {
             this.getPurchaseText(nf)
         );
 
-        this.purchaseButton.getStyleClass().add("purchaseBuilding");
+        this.purchaseButton.getStyleClass().addAll("button", "buildingPurchase");
 
         this.purchaseButton.prefWidthProperty().bind(
             this.rootNode.widthProperty().multiply(0.60)
@@ -52,7 +52,7 @@ public class BuildingNode {
             this.getUpgradeText(nf)
         );
 
-        this.upgradeButton.getStyleClass().add("upgradeBuilding");
+        this.upgradeButton.getStyleClass().addAll("button", "buildingUpgrade");
 
         this.upgradeButton.prefWidthProperty().bind(
             this.rootNode.widthProperty().multiply(0.40)

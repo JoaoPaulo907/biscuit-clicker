@@ -1,4 +1,4 @@
-package com.biscuitclicker.exception;
+package com.joaopfsuarez.biscuitclicker.exception;
 
 /**
  * An Exception that extends {@code BiscuitClickerException}, representing that the caller must have more units of something to execute the task.

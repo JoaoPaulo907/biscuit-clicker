@@ -1,7 +1,3 @@
-Button {
-    -fx-cursor: hand;
-}
-
 #mainBox {
     -fx-padding: 75 50 75 50;
 }
@@ -17,9 +13,8 @@ Button {
 
 #mainButton {
     -fx-padding: 0;
-    -fx-border-radius: 50%;
-    -fx-background-radius: 50%;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.4), 10, 0.5, 3, 3);
+    -fx-cursor: hand;
 }
 
 #mainButton:hover {
@@ -37,51 +32,52 @@ Button {
     -fx-border-width: 1px 0 1px 0;
 }
 
-.upgradePower, .purchaseBuilding, .upgradeBuilding {
+.button {
     -fx-text-fill: black;
     -fx-background-radius: 0;
     -fx-background-insets: 1px;
     -fx-border-color: black;
+    -fx-cursor: hand;
 }
 
-.upgradePower {
+.upgrade {
     -fx-alignment: center;
     -fx-background-color: rgb(230, 160, 0);
     -fx-border-width: 2px;
 }
 
-.upgradePower:hover {
+.upgrade:hover {
     -fx-background-color: rgb(230, 180, 30);
 }
 
-.upgradePower:pressed {
+.upgrade:pressed {
     -fx-background-color: rgb(230, 200, 60);
 }
 
-.purchaseBuilding {
+.buildingPurchase {
     -fx-alignment: center-left;
     -fx-background-color: rgb(150, 115, 65);
     -fx-border-width: 1px 1px 1px 2px;
 }
 
-.purchaseBuilding:hover {
+.buildingPurchase:hover {
     -fx-background-color: rgb(165, 130, 80);
 }
 
-.purchaseBuilding:pressed {
+.buildingPurchase:pressed {
     -fx-background-color: rgb(180, 145, 95);
 }
 
-.upgradeBuilding {
+.buildingUpgrade {
     -fx-alignment: center-left;
     -fx-background-color: rgb(125, 95, 55);
     -fx-border-width: 1px 2px 1px 1px;
 }
 
-.upgradeBuilding:hover {
+.buildingUpgrade:hover {
     -fx-background-color: rgb(140, 110, 70);
 }
 
-.upgradeBuilding:pressed {
+.buildingUpgrade:pressed {
     -fx-background-color: rgb(155, 125, 85);
 }

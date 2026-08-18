@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.0.4
+
+### Visible Changes
+
+- Moved the click power upgrade button to the center.
+- Corrected the hitbox of the main button.
+
+### Internal Changes
+
+- Added the namespace `joaopfsuarez` to contain the project's package.
+- Modularized the Controller's `initialize()` method into 3 new auxiliary methods.
+- Added an `Upgrade` class to generalize upgrades and make it easier to add more of them in the future.
+- Renamed some classes to make their names clearer and more consistent.
+
 ## v1.0.3
 
 ### Visible Changes

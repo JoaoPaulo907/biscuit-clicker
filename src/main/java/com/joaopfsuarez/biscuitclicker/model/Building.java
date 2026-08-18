@@ -1,6 +1,6 @@
-package com.biscuitclicker.model;
+package com.joaopfsuarez.biscuitclicker.model;
 
-import com.biscuitclicker.exception.*;
+import com.joaopfsuarez.biscuitclicker.exception.*;
 
 /**
  * Represents all the units of buildings of the same type.

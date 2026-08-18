@@ -1,4 +1,4 @@
-package com.biscuitclicker.model;
+package com.joaopfsuarez.biscuitclicker.model;
 
 /**
  * Represents something that can be upgraded.

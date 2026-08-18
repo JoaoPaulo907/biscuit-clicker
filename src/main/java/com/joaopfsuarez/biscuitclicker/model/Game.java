@@ -1,8 +1,9 @@
-package com.biscuitclicker.model;
-
-import com.biscuitclicker.exception.*;
+package com.joaopfsuarez.biscuitclicker.model;
 
 import java.util.List;
+
+import com.joaopfsuarez.biscuitclicker.exception.*;
+
 import java.util.Arrays;
 
 /**
@@ -25,7 +26,7 @@ public class Game {
     private double points;
     private double pointsPerSecond;
 
-    private Power power;
+    private ClickPower clickPower;
     private List<Building> buildings;
 
     /* --- Constructor --- */
@@ -34,7 +35,7 @@ public class Game {
         this.points = 0.0;
         this.pointsPerSecond = 0.0;
 
-        this.power = new Power();
+        this.clickPower = new ClickPower();
         this.buildings = Arrays.asList(STANDARD_BUILDINGS);
     }
 
@@ -48,8 +49,8 @@ public class Game {
         return this.pointsPerSecond;
     }
 
-    public Power getPower() {
-        return this.power;
+    public ClickPower getClickPower() {
+        return this.clickPower;
     }
 
     public List<Building> getBuildings() {
@@ -142,7 +143,7 @@ public class Game {
      * @since 1.0.0
      */
     public void click() {
-        this.points += this.power.getGain();
+        this.points += this.clickPower.getGain();
     }
 
     /**

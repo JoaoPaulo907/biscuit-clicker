@@ -1,10 +1,10 @@
-package com.biscuitclicker;
-
-import com.biscuitclicker.model.Game;
+package com.joaopfsuarez.biscuitclicker;
 
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import com.joaopfsuarez.biscuitclicker.model.Game;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

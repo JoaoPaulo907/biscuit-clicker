@@ -1,4 +1,4 @@
-package com.biscuitclicker.util;
+package com.joaopfsuarez.biscuitclicker.util;
 
 /**
  * Centralizes the log system into one class.

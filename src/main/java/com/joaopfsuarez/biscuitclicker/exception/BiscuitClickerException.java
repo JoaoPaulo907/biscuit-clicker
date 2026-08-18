@@ -1,4 +1,4 @@
-package com.biscuitclicker.exception;
+package com.joaopfsuarez.biscuitclicker.exception;
 
 /**
  * Represents a generic exception in Biscuit Clicker's business rules.

@@ -1,28 +1,29 @@
-package com.biscuitclicker.view;
-
-import com.biscuitclicker.model.Power;
+package com.joaopfsuarez.biscuitclicker.view;
 
 import java.text.NumberFormat;
 
+import com.joaopfsuarez.biscuitclicker.model.Upgrade;
+
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
 
 /**
- * Links the model of the Power class to its interface.
+ * Represents an upgrade node, linking the view to the model.
  * @since 1.0.1
  */
-public class PowerNode {
+public class UpgradeNode {
 
     /* --- Attributes --- */
 
     private HBox rootNode;
     private Button upgradeButton;
 
-    private Power model;
+    private Upgrade model;
 
     /* --- Constructor --- */
 
-    public PowerNode(Power model, NumberFormat nf) {
+    public UpgradeNode(Upgrade model, NumberFormat nf) {
         if(model == null || nf == null)
             throw new NullPointerException();
 
@@ -39,7 +40,12 @@ public class PowerNode {
             this.getUpgradeText(nf)
         );
 
-        this.upgradeButton.getStyleClass().add("upgradePower");
+        this.upgradeButton.setMaxWidth(Double.MAX_VALUE);
+        this.upgradeButton.getStyleClass().addAll("button", "upgrade");
+
+        // Expands the button to fill the width
+
+        HBox.setHgrow(upgradeButton, Priority.ALWAYS);
 
         // Inserts the button into the root
 
@@ -56,7 +62,7 @@ public class PowerNode {
         return this.upgradeButton;
     }
 
-    public Power getModel() {
+    public Upgrade getModel() {
         return this.model;
     }
 
