@@ -4,7 +4,7 @@ Português | [English](README.md)
 
 Sim, esse é só mais um jogo clicker aleatório, no qual eu gastei incontáveis horas livres que provavelmente poderiam ter sido usadas em algo bem mais produtivo (tipo dormir). Qualquer semelhança com outro jogo baseado em biscoitos é pura coincidência.
 
-Você já deve saber como é que funciona: tem um botão bem grande em forma de *biscoito* para clicar e ganhar alguns *biscoitos*, construções que geram mais *biscoitos* automaticamente para você não ter mais que clicar (e não ter tendinite na mão) e ainda algumas melhorias bobas para fazer ganhar *biscoitos* mais fácil.
+Você já deve saber como é que funciona: tem um botão bem grande em forma de *biscoito* para clicar e ganhar alguns *biscoitos*, construções que geram mais *biscoitos* automaticamente para você não ter mais que clicar (e não ter tendinite na mão) e algumas melhorias bobas para ganhar ainda mais *biscoitos*.
 
 ## Executando
 
@@ -18,10 +18,10 @@ Não posso garantir que vou continuar a desenvolver esse projeto no futuro, mas 
 
 ## Código Aberto
 
-O código fonte do projeto está disponível por completo nesse repositório.
+O código-fonte do projeto está disponível por completo neste repositório.
 
-Sinta-se à vontade para explorá-lo, aprender (**por sua conta e risco** - Eu ainda estou aprendendo!) ou até contribuir se quiser.
+Sinta-se à vontade para explorá-lo, aprender (**por sua conta e risco** - eu ainda estou aprendendo!) ou até contribuir se quiser.
 
 ## Divirta-se
 
-Sem mais, diirta-se! :3
+Sem mais, divirta-se! :3
