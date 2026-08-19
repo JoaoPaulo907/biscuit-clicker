@@ -1,10 +1,9 @@
 package com.joaopfsuarez.biscuitclicker.model;
 
 import java.util.List;
+import java.util.Arrays;
 
 import com.joaopfsuarez.biscuitclicker.exception.*;
-
-import java.util.Arrays;
 
 /**
  * Controls the game status and main logic.

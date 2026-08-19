@@ -62,9 +62,38 @@ jobs:
 
           echo "jar=target/${FINAL_NAME}.jar" >> "$GITHUB_OUTPUT"
 
+      - name: Inspect Java modules
+        shell: bash
+        run: |
+          echo "=== Variables ==="
+          echo "MODULE_NAME=${{ env.MODULE_NAME }}"
+          echo "MAIN_CLASS=${{ env.MAIN_CLASS }}"
+          echo "JAR=${{ steps.jar.outputs.jar }}"
+
+          echo
+          echo "=== JAR ==="
+          ls -lah "${{ steps.jar.outputs.jar }}"
+
+          echo
+          echo "=== JAR MODULE ==="
+          jar --describe-module --file "${{ steps.jar.outputs.jar }}"
+
+          echo
+          echo "=== target/libs ==="
+          ls -lah target/libs
+
+          echo
+          echo "=== ALL MODULES ==="
+          jdeps \
+            --module-path "target/libs${{ matrix.sep }}${{ steps.jar.outputs.jar }}" \
+            --check "${{ env.MODULE_NAME }}" || true
+
       - name: Create portable application
         shell: bash
         run: |
+          echo "Packaging:"
+          echo "${{ env.MODULE_NAME }}/${{ env.MAIN_CLASS }}"
+
           jpackage \
             --type app-image \
             --name "${{ env.APP_NAME }}" \

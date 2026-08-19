@@ -1,5 +1,4 @@
 module com.joaopfsuarez.biscuitclicker {
-    requires transitive javafx.graphics;
     requires javafx.controls;
     requires javafx.fxml;
 
