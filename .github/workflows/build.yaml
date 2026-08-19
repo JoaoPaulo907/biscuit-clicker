@@ -48,9 +48,6 @@ jobs:
       - name: Build project
         run: mvn -B clean package
 
-      - name: Copy runtime dependencies
-        run: mvn -B dependency:copy-dependencies -DincludeScope=runtime -DoutputDirectory=target/libs
-
       - name: Determine JAR name
         id: jar
         shell: bash
