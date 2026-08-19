@@ -1,5 +1,7 @@
 # Biscuit Clicker
 
+English | [Português](README.pt-BR.md)
+
 Yes, this is yet another random clicker game, in which I spent countless free hours that could probably have been used for something much more productive (like sleeping). Any resemblance to other cookie-themed clicker games is purely coincidental.
 
 You probably already know how it works: there's a big button to click and earn some *biscuits*, buildings to purchase that generate more *biscuits* automatically so you don't have to click anymore (which kinda defeats the purpose of a *clicker game*, doesn't it?), and a few simple upgrades to make earning *biscuits* even easier.
