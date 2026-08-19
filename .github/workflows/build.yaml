@@ -8,8 +8,8 @@ on:
 
 env:
   APP_NAME: BiscuitClicker
-  MODULE_NAME: com.biscuitclicker
-  MAIN_CLASS: com.biscuitclicker.Main
+  MODULE_NAME: com.joaopfsuarez.biscuitclicker
+  MAIN_CLASS: com.joaopfsuarez.biscuitclicker.Main
   JAVA_VERSION: "21"
 
 jobs:
