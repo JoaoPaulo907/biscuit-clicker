@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.0.5 (PREVIEW)
+
+### Visible Changes
+
+- Added an icon to the application.
+
+### Internal Changes
+
+- None
+
 ## v1.0.4
 
 ### Visible Changes

@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
 
+import javafx.scene.image.Image;
+
 import com.joaopfsuarez.biscuitclicker.model.Game;
 
 /**
@@ -67,6 +69,16 @@ public class Main extends Application {
 
         stage.setTitle("Biscuit Clicker");
         stage.setScene(scene);
+
+        // Sets the icon
+
+        Image icon = new Image(
+            this.getClass()
+                .getResource("/images/biscuit.png")
+                .toExternalForm()
+        );
+
+        stage.getIcons().add(icon);
 
         // Returns to the standard dimentions when demaximizated
 
