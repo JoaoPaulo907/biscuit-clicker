@@ -5,6 +5,7 @@ package com.joaopfsuarez.biscuitclicker.exception;
  * @since 1.0.0
  */
 public class InsufficientPointsException extends BiscuitClickerException {
+
     public InsufficientPointsException() {
         super();
     }
@@ -12,4 +13,5 @@ public class InsufficientPointsException extends BiscuitClickerException {
     public InsufficientPointsException(String s) {
         super(s);
     }
+
 }

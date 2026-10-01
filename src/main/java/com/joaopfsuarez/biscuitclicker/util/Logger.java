@@ -5,6 +5,7 @@ package com.joaopfsuarez.biscuitclicker.util;
  * @since 1.0.1
  */
 public abstract class Logger {
+
     public static void line() {
         System.out.println();
     }
@@ -20,4 +21,5 @@ public abstract class Logger {
     public static void error(Object msg) {
         System.err.println("[Error] " + msg);
     }
+
 }

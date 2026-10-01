@@ -4,12 +4,12 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import com.joaopfsuarez.biscuitclicker.model.Game;
-
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.fxml.FXMLLoader;
+
+import com.joaopfsuarez.biscuitclicker.model.Game;
 
 /**
  * <h3>Biscuit Clicker</h3>
@@ -33,16 +33,22 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
         // Loads the FXML and creates the scene
 
         FXMLLoader fxmlLoader = new FXMLLoader(
-            getClass().getResource("/fxml/view.fxml")
+            this.getClass()
+                .getResource("/fxml/view.fxml")
         );
 
         double standardWidth = 1000.0;
         double standardHeight = 650.0;
 
-        Scene scene = new Scene(fxmlLoader.load(), standardWidth, standardHeight);
+        Scene scene = new Scene(
+            fxmlLoader.load(),
+            standardWidth,
+            standardHeight
+        );
 
         // Gets the controller and game instances
 
@@ -52,7 +58,9 @@ public class Main extends Application {
         // Loads the CSS in the scene
 
         scene.getStylesheets().add(
-            getClass().getResource("/css/style.css").toExternalForm()
+            this.getClass()
+                .getResource("/css/style.css")
+                .toExternalForm()
         );
 
         // Sets the title and the scene in the stage
@@ -80,6 +88,7 @@ public class Main extends Application {
 
         stage.show();
         this.startAutoGain();
+
     }
 
     /* --- Autogain --- */
@@ -89,12 +98,16 @@ public class Main extends Application {
      * @since 1.0.0
      */
     public void startAutoGain() {
+
         this.scheduler.scheduleAtFixedRate(() -> {
             this.game.gainAutoPoints();
 
             javafx.application.Platform.runLater(() -> {
                 this.controller.updateStatus();
             });
+
         }, 0, 1, TimeUnit.SECONDS);
+
     }
+
 }

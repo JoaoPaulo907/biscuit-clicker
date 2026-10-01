@@ -22,10 +22,12 @@ public class EffectManager {
     /* --- Constructor --- */
 
     public EffectManager(Pane effectLayer) {
+
         if(effectLayer == null)
             throw new NullPointerException();
 
         this.effectLayer = effectLayer;
+
     }
 
     /* --- Methods --- */
@@ -35,6 +37,17 @@ public class EffectManager {
      * @since 1.0.3
      */
     public void risingText(String text, double mouseX, double mouseY) {
+
+        if(text == null) {
+            throw new NullPointerException();
+        }
+
+        if(text.isBlank()) {
+            throw new IllegalArgumentException(
+                "Invalid text value."
+            );
+        }
+
         // Creates the Label
 
         Label textLabel = new Label(text);
@@ -51,16 +64,26 @@ public class EffectManager {
         textLabel.setLayoutX(mouseX);
         textLabel.setLayoutY(mouseY);
 
-        this.effectLayer.getChildren().add(textLabel);
+        this.effectLayer
+            .getChildren()
+            .add(textLabel);
 
         // Rises the text
 
-        TranslateTransition rise = new TranslateTransition(Duration.seconds(1), textLabel);
+        TranslateTransition rise = new TranslateTransition(
+            Duration.seconds(1),
+            textLabel
+        );
+
         rise.setByY(-50);
 
         // Reduces the text opacity
 
-        FadeTransition fade = new FadeTransition(Duration.seconds(1), textLabel);
+        FadeTransition fade = new FadeTransition(
+            Duration.seconds(1),
+            textLabel
+        );
+
         fade.setFromValue(1.0);
         fade.setToValue(0.0);
 
@@ -69,9 +92,13 @@ public class EffectManager {
         ParallelTransition animation = new ParallelTransition(rise, fade);
 
         animation.setOnFinished(event -> {
-            this.effectLayer.getChildren().remove(textLabel);
+            this.effectLayer
+                .getChildren()
+                .remove(textLabel);
         });
 
         animation.play();
+
     }
+
 }

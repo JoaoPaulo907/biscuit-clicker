@@ -29,8 +29,16 @@ public class Building implements Purchasable, Upgradable {
     /* --- Constructor --- */
 
     public Building(String name, double gain, int price, int upgradePrice) {
-        if(name == null || name.isBlank() || gain <= 0 || price <= 0 || upgradePrice <= 0)
-            throw new IllegalArgumentException("Invalid building values while initializing.");
+
+        if(name == null) {
+            throw new NullPointerException();
+        }
+
+        if(name.isBlank() || gain <= 0 || price <= 0 || upgradePrice <= 0) {
+            throw new IllegalArgumentException(
+                "Invalid building values."
+            );
+        }
 
         this.name = name;
 
@@ -40,6 +48,7 @@ public class Building implements Purchasable, Upgradable {
 
         this.quantity = 0;
         this.level = 1;
+
     }
 
     /* --- Out --- */
@@ -81,16 +90,28 @@ public class Building implements Purchasable, Upgradable {
      * @since 1.0.0
      */
     private void calculateAttributes() {
-        if(this.level < 1 || this.level > MAX_LEVEL)
-            throw new IllegalStateException("Invalid building level.");
+
+        if(this.level < 1 || this.level > MAX_LEVEL) {
+            throw new IllegalStateException(
+                "Invalid building level."
+            );
+        }
 
         int quantityMult = this.quantity;
         int levelMult = this.level - 1;
 
-        this.price        = (int) Math.round(this.initialPrice        * Math.pow(1.05, quantityMult));
-        this.upgradePrice = (int) Math.round(this.initialUpgradePrice * Math.pow(2.00, levelMult   ));
+        this.price = (int) Math.round(
+            this.initialPrice *
+            Math.pow(1.05, quantityMult)
+        );
+
+        this.upgradePrice = (int) Math.round(
+            this.initialUpgradePrice *
+            Math.pow(2.00, levelMult)
+        );
 
         this.gain = this.initialGain * Math.pow(2.0, levelMult);
+
     }
 
     /**
@@ -99,17 +120,28 @@ public class Building implements Purchasable, Upgradable {
      */
     @Override
     public void increment(int quantity) {
-        if(this.quantity < 0 || this.quantity > MAX_QUANTITY)
-            throw new IllegalStateException("Invalid building count.");
 
-        if(quantity < 1)
-            throw new IllegalArgumentException("Must add at least one building.");
+        if(this.quantity < 0 || this.quantity > MAX_QUANTITY) {
+            throw new IllegalStateException(
+                "Invalid building count."
+            );
+        }
 
-        if(this.quantity == MAX_QUANTITY)
-            throw new MaxQuantityException("Max quantity of buildings reached.");
+        if(quantity < 1) {
+            throw new IllegalArgumentException(
+                "Must add at least one building."
+            );
+        }
+
+        if(this.quantity == MAX_QUANTITY) {
+            throw new MaxQuantityException(
+                "Max quantity of buildings reached."
+            );
+        }
 
         this.quantity += quantity;
         this.calculateAttributes();
+
     }
 
     /**
@@ -118,16 +150,28 @@ public class Building implements Purchasable, Upgradable {
      */
     @Override
     public void upgrade() {
-        if(this.level < 1 || this.level > MAX_LEVEL)
-            throw new IllegalStateException("Invalid building level.");
 
-        if(this.quantity < 1)
-            throw new InsufficientQuantityException("You must have at least 1 building to upgrade it.");
+        if(this.level < 1 || this.level > MAX_LEVEL) {
+            throw new IllegalStateException(
+                "Invalid building level."
+            );
+        }
 
-        if(this.level == MAX_LEVEL)
-            throw new MaxLevelException("Max building level reached.");
+        if(this.quantity < 1) {
+            throw new InsufficientQuantityException(
+                "You must have at least 1 building to upgrade it."
+            );
+        }
+
+        if(this.level == MAX_LEVEL) {
+            throw new MaxLevelException(
+                "Max building level reached."
+            );
+        }
 
         this.level++;
         this.calculateAttributes();
+
     }
+
 }

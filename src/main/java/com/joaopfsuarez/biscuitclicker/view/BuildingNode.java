@@ -2,10 +2,10 @@ package com.joaopfsuarez.biscuitclicker.view;
 
 import java.text.NumberFormat;
 
-import com.joaopfsuarez.biscuitclicker.model.Building;
-
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
+
+import com.joaopfsuarez.biscuitclicker.model.Building;
 
 /**
  * Represents a building node, linking the view to the model.
@@ -24,6 +24,7 @@ public class BuildingNode {
     /* --- Constructor --- */
 
     public BuildingNode(Building model, NumberFormat nf) {
+
         if(model == null || nf == null)
             throw new NullPointerException();
 
@@ -40,10 +41,14 @@ public class BuildingNode {
             this.getPurchaseText(nf)
         );
 
-        this.purchaseButton.getStyleClass().addAll("button", "buildingPurchase");
+        this.purchaseButton
+            .getStyleClass()
+            .addAll("button", "buildingPurchase");
 
         this.purchaseButton.prefWidthProperty().bind(
-            this.rootNode.widthProperty().multiply(0.60)
+            this.rootNode
+                .widthProperty()
+                .multiply(0.60)
         );
 
         // Creates the upgrade button
@@ -52,15 +57,22 @@ public class BuildingNode {
             this.getUpgradeText(nf)
         );
 
-        this.upgradeButton.getStyleClass().addAll("button", "buildingUpgrade");
+        this.upgradeButton
+            .getStyleClass()
+            .addAll("button", "buildingUpgrade");
 
         this.upgradeButton.prefWidthProperty().bind(
-            this.rootNode.widthProperty().multiply(0.40)
+            this.rootNode
+                .widthProperty()
+                .multiply(0.40)
         );
 
         // Inserts the buttons into the root
 
-        this.rootNode.getChildren().addAll(this.purchaseButton, this.upgradeButton);
+        this.rootNode
+            .getChildren()
+            .addAll(this.purchaseButton, this.upgradeButton);
+
     }
 
     /* --- Out --- */
@@ -82,17 +94,16 @@ public class BuildingNode {
     }
 
     public String getPurchaseText(NumberFormat nf) {
-        return (
+        return
             this.model.getName() + " " +
-            "("   + nf.format(this.model.getQuantity()) + ")"   + 
-            " - " + nf.format(this.model.getPrice())    + " b$"
-        );
+            "("   + nf.format(this.model.getQuantity()) + ")" + 
+            " - " + nf.format(this.model.getPrice())    + " b$";
     }
 
     public String getUpgradeText(NumberFormat nf) {
-        return (
+        return
             "lv. " + this.model.getLevel() +
-            " - "  + nf.format(this.model.getUpgradePrice()) + " b$"
-        );
+            " - "  + nf.format(this.model.getUpgradePrice()) + " b$";
     }
+
 }

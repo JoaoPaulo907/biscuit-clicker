@@ -5,6 +5,7 @@ package com.joaopfsuarez.biscuitclicker.exception;
  * @since 1.0.0
  */
 public class BiscuitClickerException extends RuntimeException {
+
     public BiscuitClickerException() {
         super();
     }
@@ -12,4 +13,5 @@ public class BiscuitClickerException extends RuntimeException {
     public BiscuitClickerException(String s) {
         super(s);
     }
+
 }

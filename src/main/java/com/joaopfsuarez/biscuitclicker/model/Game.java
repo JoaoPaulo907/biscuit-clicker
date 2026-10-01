@@ -13,6 +13,8 @@ public class Game {
 
     /* --- Attributes --- */
 
+    /* ( -o-)-_ Gonna improve this model soon _-(-o- ) */
+
     private static final Building[] STANDARD_BUILDINGS = {
         new Building("Cursor",  0.1,       15,      100     ),
         new Building("Grandma", 1.0,       100,     1000    ),
@@ -31,11 +33,13 @@ public class Game {
     /* --- Constructor --- */
 
     public Game() {
+
         this.points = 0.0;
         this.pointsPerSecond = 0.0;
 
         this.clickPower = new ClickPower();
-        this.buildings = Arrays.asList(STANDARD_BUILDINGS);
+        this.buildings = Arrays.asList(Game.STANDARD_BUILDINGS);
+
     }
 
     /* --- Out --- */
@@ -63,10 +67,13 @@ public class Game {
      * @since 1.0.0
      */
     private void calculatePointsPerSecond() {
+
         this.pointsPerSecond = 0.0;
 
-        for(Building current : this.buildings)
+        for(Building current : this.buildings) {
             this.pointsPerSecond += current.getTotalGain();
+        }
+
     }
 
     /**
@@ -76,9 +83,13 @@ public class Game {
      * @since 1.0.0
      */
     private boolean hasPointsToBuy(int price) {
-        if(Math.abs(this.points - price) < 0.1)
+
+        if(Math.abs(this.points - price) < 0.1) {
             return true;
+        }
+
         return this.points >= price;
+
     }
 
     /**
@@ -90,8 +101,10 @@ public class Game {
      * @since 1.0.1
      */
     public void buy(Purchasable purchasable, int quantity) {
-        if(purchasable == null)
+
+        if(purchasable == null) {
             throw new NullPointerException();
+        }
 
         int totalPrice = 0;
 
@@ -110,6 +123,7 @@ public class Game {
         this.points -= totalPrice;
 
         this.calculatePointsPerSecond();
+
     }
 
     /**
@@ -120,8 +134,10 @@ public class Game {
      * @since 1.0.1
      */
     public void upgrade(Upgradable upgradable) {
-        if(upgradable == null)
+
+        if(upgradable == null) {
             throw new NullPointerException();
+        }
 
         int totalPrice = upgradable.getUpgradePrice();
 
@@ -135,6 +151,7 @@ public class Game {
         this.points -= totalPrice;
 
         this.calculatePointsPerSecond();
+
     }
 
     /**
@@ -152,4 +169,5 @@ public class Game {
     public void gainAutoPoints() {
         this.points += this.pointsPerSecond;
     }
+
 }

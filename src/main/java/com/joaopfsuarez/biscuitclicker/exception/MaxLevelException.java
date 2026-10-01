@@ -5,6 +5,7 @@ package com.joaopfsuarez.biscuitclicker.exception;
  * @since 1.0.0
  */
 public class MaxLevelException extends BiscuitClickerException {
+
     public MaxLevelException() {
         super();
     }
@@ -12,4 +13,5 @@ public class MaxLevelException extends BiscuitClickerException {
     public MaxLevelException(String s) {
         super(s);
     }
+
 }

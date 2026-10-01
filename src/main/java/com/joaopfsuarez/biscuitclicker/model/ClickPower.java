@@ -49,13 +49,25 @@ public class ClickPower extends Upgrade {
      * @since 1.0.0
      */
     private void calculateAttributes() {
-        if(this.level < 1 || this.level > MAX_LEVEL)
-            throw new IllegalStateException("Invalid power level.");
+
+        if(this.level < 1 || this.level > MAX_LEVEL) {
+            throw new IllegalStateException(
+                "Invalid power level."
+            );
+        }
 
         int levelMult = this.level - 1;
 
-        this.gain         = (int) Math.round(this.initialGain         * Math.pow(2.0, levelMult));
-        this.upgradePrice = (int) Math.round(this.initialUpgradePrice * Math.pow(2.0, levelMult));
+        this.gain = (int) Math.round(
+            this.initialGain *
+            Math.pow(2.0, levelMult)
+        );
+
+        this.upgradePrice = (int) Math.round(
+            this.initialUpgradePrice *
+            Math.pow(2.0, levelMult)
+        );
+
     }
 
     /**
@@ -64,13 +76,22 @@ public class ClickPower extends Upgrade {
      */
     @Override
     public void upgrade() {
-        if(this.level < 1 || this.level > MAX_LEVEL)
-            throw new IllegalStateException("Invalid power level.");
 
-        if(this.level == MAX_LEVEL)
-            throw new MaxLevelException("Max power level reached.");
+        if(this.level < 1 || this.level > MAX_LEVEL) {
+            throw new IllegalStateException(
+                "Invalid power level."
+            );
+        }
+
+        if(this.level == MAX_LEVEL) {
+            throw new MaxLevelException(
+                "Max power level reached."
+            );
+        }
 
         this.level++;
         this.calculateAttributes();
+
     }
+
 }

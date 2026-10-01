@@ -3,12 +3,6 @@ package com.joaopfsuarez.biscuitclicker;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import com.joaopfsuarez.biscuitclicker.exception.BiscuitClickerException;
-import com.joaopfsuarez.biscuitclicker.model.*;
-import com.joaopfsuarez.biscuitclicker.util.EffectManager;
-import com.joaopfsuarez.biscuitclicker.util.Logger;
-import com.joaopfsuarez.biscuitclicker.view.*;
-
 import javafx.fxml.FXML;
 
 import javafx.scene.layout.VBox;
@@ -21,6 +15,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.paint.Color;
+
+import com.joaopfsuarez.biscuitclicker.model.*;
+import com.joaopfsuarez.biscuitclicker.util.EffectManager;
+import com.joaopfsuarez.biscuitclicker.util.Logger;
+import com.joaopfsuarez.biscuitclicker.view.*;
+import com.joaopfsuarez.biscuitclicker.exception.BiscuitClickerException;
 
 /**
  * Controls the user interface of the application.
@@ -70,6 +70,7 @@ public class Controller {
 
     @FXML
     public void initialize() {
+
         // Initializes the attributes
 
         this.game = new Game();
@@ -99,6 +100,7 @@ public class Controller {
         // Shows the initial status
 
         this.updateStatus();
+
     }
 
     /* --- Initializations --- */
@@ -108,11 +110,16 @@ public class Controller {
      * @since 1.0.4
      */
     private void initializeMainButton() {
+
         Circle background = new Circle(75, 75, 75);
         background.setFill(Color.TRANSPARENT);
 
         ImageView img = new ImageView(
-            new Image(getClass().getResource("/images/biscuit.png").toExternalForm())
+            new Image(
+                this.getClass()
+                    .getResource("/images/biscuit.png")
+                    .toExternalForm()
+            )
         );
 
         img.setFitWidth(150);
@@ -138,6 +145,7 @@ public class Controller {
                 event.getSceneY()
             );
         });
+
     }
 
     /**
@@ -145,25 +153,32 @@ public class Controller {
      * @since 1.0.4
      */
     private void initializeUpgradesBox() {
-        UpgradeNode powerNode = new UpgradeNode(this.game.getClickPower(), nf);
+
+        UpgradeNode clickPowerNode = new UpgradeNode(
+            this.game.getClickPower(),
+            this.nf
+        );
 
         // Handles power upgrades
 
-        powerNode.getUpgradeButton().setOnAction(event -> {
+        clickPowerNode.getUpgradeButton().setOnAction(event -> {
             try {
-                this.game.upgrade(powerNode.getModel());
+                this.game.upgrade(clickPowerNode.getModel());
             } catch(BiscuitClickerException e) {
                 Logger.error(e.getMessage());
             }
 
-            powerNode.getUpgradeButton().setText(
-                powerNode.getUpgradeText(nf)
+            clickPowerNode.getUpgradeButton().setText(
+                clickPowerNode.getUpgradeText(this.nf)
             );
 
             this.updateStatus();
         });
 
-        this.upgradesBox.getChildren().add(powerNode.getRootNode());
+        this.upgradesBox
+            .getChildren()
+            .add(clickPowerNode.getRootNode());
+
     }
 
     /**
@@ -171,8 +186,12 @@ public class Controller {
      * @since 1.0.4
      */
     private void initializeBuildingsBox() {
+
         for(Building current : game.getBuildings()) {
-            BuildingNode buildingNode = new BuildingNode(current, nf);
+            BuildingNode buildingNode = new BuildingNode(
+                current,
+                this.nf
+            );
 
             // Handles building purchases
 
@@ -206,8 +225,11 @@ public class Controller {
                 this.updateStatus();
             });
 
-            buildingsBox.getChildren().add(buildingNode.getRootNode());
+            this.buildingsBox
+                .getChildren()
+                .add(buildingNode.getRootNode());
         }
+
     }
 
     /* --- Out --- */
@@ -223,14 +245,15 @@ public class Controller {
      * @since 1.0.0
      */
     public void updateStatus() {
-        nf.setMaximumFractionDigits(0);
-        String formattedPoints = nf.format(Math.floor(this.game.getPoints()));
 
-        nf.setMaximumFractionDigits(1);
-        String formattedPPS = nf.format(this.game.getPointsPerSecond());
+        this.nf.setMaximumFractionDigits(0);
+        String formattedPoints = this.nf.format(Math.floor(this.game.getPoints()));
 
-        nf.setMaximumFractionDigits(0);
-        String formattedPPC = nf.format(this.game.getClickPower().getGain());
+        this.nf.setMaximumFractionDigits(1);
+        String formattedPPS = this.nf.format(this.game.getPointsPerSecond());
+
+        this.nf.setMaximumFractionDigits(0);
+        String formattedPPC = this.nf.format(this.game.getClickPower().getGain());
 
         this.pointsLabel.setText(formattedPoints + " biscuits");
 
@@ -238,5 +261,7 @@ public class Controller {
             "bps: " + formattedPPS + "\n" +
             "bpc: " + formattedPPC
         );
+
     }
+
 }
